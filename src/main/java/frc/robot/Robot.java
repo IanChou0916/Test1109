@@ -63,7 +63,12 @@ public class Robot extends TimedRobot {
    * SmartDashboard integrated updating.
    */
   @Override
-  public void robotPeriodic() {}
+  public void robotPeriodic() {
+    SmartDashboard.putNumber("xSpeed", -driveController.getLeftY());
+    SmartDashboard.putNumber("zRotation", driveController.getRightX());
+    SmartDashboard.putBoolean("rightMotorInverted", m_in.getInverted());
+    SmartDashboard.updateValues();
+  }
 
   /**
    * This autonomous (along with the chooser code above) shows how to select between different
@@ -103,23 +108,23 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    double y = -driveController.getLeftY()*0.2;
-    double x = driveController.getRightX()*0.2;
+    double y = -driveController.getLeftY()*0.4;
+    double x = driveController.getRightX()*0.6;
     m_drive.arcadeDrive(y, -x);
     m_lb.set(m_lf.get());
     m_rb.set(m_rf.get());
 
     if(operatorController.getAButton()){
-      m_sh.set(0.5);
+      m_sh.set(1);
     }
     else if(operatorController.getBButton()){
       m_sh.set(0.0);
     }
     if(operatorController.getPOV() == 0){
-      m_in.set(0.5);
+      m_in.set(1);
     }
     else if(operatorController.getPOV() == 180){
-      m_in.set(-0.5);
+      m_in.set(-1);
     }
     else{
       m_in.set(0.0);
